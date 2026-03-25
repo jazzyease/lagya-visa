@@ -19,8 +19,6 @@ import {
   MapPin,
   Compass,
   Plane,
-  Play,
-  Plus,
   Star,
   Heart,
   Sparkles,
@@ -31,86 +29,84 @@ import {
   PhoneCall,
   CalendarDays,
   Users,
+  Utensils,
+  Camera,
+  Wifi,
+  Car,
+  Award,
+  CheckCircle2,
+  Headphones,
+  Umbrella,
 } from "lucide-react";
 
 /* ═══════════════════════════════════
    ANIMATION VARIANTS
    ═══════════════════════════════════ */
-const fade = {
-  hidden: { opacity: 0, y: 40 },
-  show: { opacity: 1, y: 0 },
-};
-const stagger = { show: { transition: { staggerChildren: 0.15 } } };
-const scaleIn = {
-  hidden: { opacity: 0, scale: 0.88, y: 30 },
-  show: { opacity: 1, scale: 1, y: 0 },
-};
-const slideLeft = { hidden: { opacity: 0, x: -60 }, show: { opacity: 1, x: 0 } };
-const slideRight = { hidden: { opacity: 0, x: 60 }, show: { opacity: 1, x: 0 } };
+const fade = { hidden: { opacity: 0, y: 40 }, show: { opacity: 1, y: 0 } };
+const stagger = { show: { transition: { staggerChildren: 0.13 } } };
+const scaleIn = { hidden: { opacity: 0, scale: 0.88, y: 30 }, show: { opacity: 1, scale: 1, y: 0 } };
 
 /* ═══════════════════════════════════
    DATA
    ═══════════════════════════════════ */
 const destinations = [
+  { title: "Santorini, Greece", duration: "7 Days", price: "From $1,299", rating: "4.9", image: "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?auto=format&fit=crop&w=900&q=80" },
+  { title: "Bali, Indonesia", duration: "10 Days", price: "From $899", rating: "5.0", image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=900&q=80" },
+  { title: "Swiss Alps", duration: "5 Days", price: "From $1,599", rating: "4.8", image: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?auto=format&fit=crop&w=900&q=80" },
+];
+
+/* Horizontal scroll gallery data */
+const galleryImages = [
+  { src: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=800&q=80", label: "Norway Fjords", tag: "Adventure" },
+  { src: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=800&q=80", label: "Amalfi Coast", tag: "Romance" },
+  { src: "https://images.unsplash.com/photo-1493558103817-58b2924bce98?auto=format&fit=crop&w=800&q=80", label: "Golden Beaches", tag: "Beach" },
+  { src: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80", label: "Mountain Peaks", tag: "Hiking" },
+  { src: "https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=800&q=80", label: "Nordic Wonders", tag: "Culture" },
+  { src: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80", label: "Hot Air Balloons", tag: "Experience" },
+];
+
+/* Travel packages */
+const packages = [
   {
-    title: "Santorini, Greece",
-    duration: "7 Days",
-    price: "From $1,299",
-    rating: "4.9",
-    image: "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?auto=format&fit=crop&w=900&q=80",
+    title: "Romantic Bali Escape",
+    location: "Bali, Indonesia",
+    price: "$899",
+    perPerson: "/person",
+    duration: "10 Days · 9 Nights",
+    image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=700&q=80",
+    amenities: [Plane, Utensils, Wifi, Camera],
+    featured: false,
   },
   {
-    title: "Bali, Indonesia",
-    duration: "10 Days",
-    price: "From $899",
-    rating: "5.0",
-    image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=900&q=80",
+    title: "Greek Island Hopping",
+    location: "Santorini & Mykonos",
+    price: "$1,799",
+    perPerson: "/person",
+    duration: "12 Days · 11 Nights",
+    image: "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?auto=format&fit=crop&w=700&q=80",
+    amenities: [Plane, Utensils, Car, Camera],
+    featured: true,
   },
   {
-    title: "Swiss Alps",
-    duration: "5 Days",
-    price: "From $1,599",
-    rating: "4.8",
-    image: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?auto=format&fit=crop&w=900&q=80",
+    title: "Swiss Mountain Retreat",
+    location: "Interlaken & Zermatt",
+    price: "$1,599",
+    perPerson: "/person",
+    duration: "7 Days · 6 Nights",
+    image: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?auto=format&fit=crop&w=700&q=80",
+    amenities: [Plane, Utensils, Car, Wifi],
+    featured: false,
   },
 ];
 
 const services = [
-  {
-    icon: Plane,
-    title: "Visa Assistance",
-    desc: "Expert guidance for study, work, PR, and tourist visas to 30+ countries worldwide.",
-    backTitle: "Fly Anywhere",
-    backDesc: "30+ countries covered",
-    svgId: "visa",
-  },
-  {
-    icon: Map,
-    title: "Tour Packages",
-    desc: "Handcrafted travel packages with flights, hotels, sightseeing, and local experiences included.",
-    backTitle: "Explore More",
-    backDesc: "Custom itineraries",
-    svgId: "tour",
-  },
-  {
-    icon: Briefcase,
-    title: "Corporate Travel",
-    desc: "End-to-end business travel solutions — conferences, team retreats, and executive trips.",
-    backTitle: "Business Class",
-    backDesc: "Executive arrangements",
-    svgId: "corporate",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Travel Insurance",
-    desc: "Comprehensive coverage so you travel worry-free. Medical, trip cancellation, and baggage protection.",
-    backTitle: "Travel Safe",
-    backDesc: "Full coverage plans",
-    svgId: "insurance",
-  },
+  { icon: Plane, title: "Visa Assistance", desc: "Expert guidance for study, work, PR, and tourist visas to 30+ countries.", backTitle: "Fly Anywhere", backDesc: "30+ countries covered", svgId: "visa" },
+  { icon: Map, title: "Tour Packages", desc: "Handcrafted travel packages with flights, hotels, and local experiences.", backTitle: "Explore More", backDesc: "Custom itineraries", svgId: "tour" },
+  { icon: Briefcase, title: "Corporate Travel", desc: "End-to-end business travel — conferences, retreats, and executive trips.", backTitle: "Business Class", backDesc: "Executive arrangements", svgId: "corporate" },
+  { icon: ShieldCheck, title: "Travel Insurance", desc: "Comprehensive coverage — medical, trip cancellation, and baggage protection.", backTitle: "Travel Safe", backDesc: "Full coverage plans", svgId: "insurance" },
 ];
 
-/* Animated SVG components for flip card backs */
+/* SVG components for flip cards */
 function VisaSvg() {
   return (
     <svg viewBox="0 0 120 120" fill="none" className="flip-svg">
@@ -129,11 +125,7 @@ function TourSvg() {
       <circle cx="60" cy="60" r="40" fill="#e6faf5" stroke="#0ead8e" strokeWidth="1.5" />
       <ellipse cx="60" cy="60" rx="20" ry="40" fill="none" stroke="#0ead8e" strokeWidth="1" opacity="0.4" />
       <line x1="20" y1="60" x2="100" y2="60" stroke="#0ead8e" strokeWidth="1" opacity="0.3" />
-      <line x1="60" y1="20" x2="60" y2="100" stroke="#0ead8e" strokeWidth="1" opacity="0.3" />
-      <g className="pin-bounce">
-        <path d="M60 30 C60 30 48 40 48 50 C48 57 53 62 60 62 C67 62 72 57 72 50 C72 40 60 30 60 30Z" fill="#ff6b35" />
-        <circle cx="60" cy="49" r="5" fill="white" />
-      </g>
+      <g className="pin-bounce"><path d="M60 30 C60 30 48 40 48 50 C48 57 53 62 60 62 C67 62 72 57 72 50 C72 40 60 30 60 30Z" fill="#ff6b35" /><circle cx="60" cy="49" r="5" fill="white" /></g>
       <circle cx="60" cy="50" r="8" fill="none" stroke="#ff6b35" strokeWidth="1" className="pulse-ring ring-1" />
       <circle cx="60" cy="50" r="15" fill="none" stroke="#ff6b35" strokeWidth="0.8" className="pulse-ring ring-2" />
     </svg>
@@ -142,27 +134,18 @@ function TourSvg() {
 function CorporateSvg() {
   return (
     <svg viewBox="0 0 120 120" fill="none" className="flip-svg">
-      <rect x="20" y="35" width="80" height="50" rx="8" fill="white" stroke="#ff6b35" strokeWidth="1.5" className="pass-appear" />
+      <rect x="20" y="35" width="80" height="50" rx="8" fill="white" stroke="#ff6b35" strokeWidth="1.5" />
       <line x1="70" y1="40" x2="70" y2="80" stroke="#ff6b35" strokeWidth="1" strokeDasharray="3 3" opacity="0.4" />
       <rect x="28" y="45" width="32" height="4" rx="2" fill="#ffccb3" />
       <rect x="28" y="54" width="24" height="3" rx="1.5" fill="#ffe0cc" />
-      <rect x="28" y="62" width="28" height="3" rx="1.5" fill="#ffe0cc" />
-      <rect x="76" y="45" width="18" height="18" rx="3" fill="#fff0e8" stroke="#ff6b35" strokeWidth="1" />
-      <rect x="80" y="49" width="4" height="4" fill="#ff6b35" opacity="0.6" />
-      <rect x="86" y="49" width="4" height="4" fill="#ff6b35" opacity="0.4" />
-      <rect x="80" y="55" width="4" height="4" fill="#ff6b35" opacity="0.3" />
-      <rect x="86" y="55" width="4" height="4" fill="#ff6b35" opacity="0.6" />
-      <g className="stamp-appear">
-        <circle cx="50" cy="65" r="10" fill="none" stroke="#0ead8e" strokeWidth="2" />
-        <text x="50" y="68" textAnchor="middle" fontSize="7" fontWeight="700" fill="#0ead8e">OK</text>
-      </g>
+      <g className="stamp-appear"><circle cx="50" cy="65" r="10" fill="none" stroke="#0ead8e" strokeWidth="2" /><text x="50" y="68" textAnchor="middle" fontSize="7" fontWeight="700" fill="#0ead8e">OK</text></g>
     </svg>
   );
 }
 function InsuranceSvg() {
   return (
     <svg viewBox="0 0 120 120" fill="none" className="flip-svg">
-      <path d="M60 20 L90 35 L90 65 Q90 90 60 105 Q30 90 30 65 L30 35 Z" fill="#e6faf5" stroke="#0ead8e" strokeWidth="1.5" className="shield-draw" />
+      <path d="M60 20 L90 35 L90 65 Q90 90 60 105 Q30 90 30 65 L30 35 Z" fill="#e6faf5" stroke="#0ead8e" strokeWidth="1.5" />
       <path d="M60 32 L82 43 L82 63 Q82 82 60 93 Q38 82 38 63 L38 43 Z" fill="white" opacity="0.8" />
       <path d="M47 60 L55 70 L73 48" stroke="#0ead8e" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" fill="none" className="check-draw" />
       <circle cx="40" cy="30" r="2" fill="#ff6b35" className="sparkle sp-1" />
@@ -171,23 +154,28 @@ function InsuranceSvg() {
     </svg>
   );
 }
-const flipSvgMap: Record<string, React.FC> = {
-  visa: VisaSvg, tour: TourSvg, corporate: CorporateSvg, insurance: InsuranceSvg,
-};
+const flipSvgMap: Record<string, React.FC> = { visa: VisaSvg, tour: TourSvg, corporate: CorporateSvg, insurance: InsuranceSvg };
+
+const whyUs = [
+  { icon: Award, title: "Award Winning", desc: "Recognized for excellence in travel planning and customer service." },
+  { icon: Headphones, title: "24/7 Support", desc: "Round-the-clock assistance during your entire journey." },
+  { icon: ShieldCheck, title: "Best Price Guarantee", desc: "We match or beat any comparable travel package price." },
+  { icon: Umbrella, title: "Free Cancellation", desc: "Plans change — cancel up to 48 hours before for a full refund." },
+];
 
 const howItWorks = [
-  { step: "01", title: "Tell Us Your Dream", desc: "Share your travel vision — destination, dates, budget, and preferences.", icon: PhoneCall },
-  { step: "02", title: "We Craft Your Journey", desc: "Our experts design a tailored itinerary with the best flights, stays, and experiences.", icon: CalendarDays },
-  { step: "03", title: "Pack & Explore", desc: "Everything's handled. Just pack your bags and enjoy your dream trip.", icon: Compass },
+  { step: "01", title: "Tell Us Your Dream", desc: "Share your travel vision — destination, dates, budget.", icon: PhoneCall },
+  { step: "02", title: "We Craft Your Journey", desc: "Experts design a tailored itinerary with the best stays.", icon: CalendarDays },
+  { step: "03", title: "Pack & Explore", desc: "Everything's handled. Just enjoy your dream trip.", icon: Compass },
 ];
 
 const stories = [
-  { quote: "Lagya made our honeymoon absolutely magical. Every hotel, every transfer, every sunset — perfectly planned.", name: "Maya & Raj", role: "Bali Honeymoon", avatar: "🌺" },
-  { quote: "I was nervous about my Canada PR process, but Lagya made it feel like booking a holiday. So smooth!", name: "Dhruv Mehta", role: "Canada PR", avatar: "🍁" },
-  { quote: "Our family trip to Europe was the best vacation ever. The kids still talk about the Swiss train ride.", name: "The Sharma Family", role: "Europe Family Tour", avatar: "🏔️" },
-  { quote: "From university shortlisting to accommodation — everything handled. I just had to show up with my suitcase!", name: "Laura Kim", role: "UK Study Visa", avatar: "🎓" },
-  { quote: "The Maldives package was insane value. Private villa, sunset cruise, snorkeling — all included.", name: "Priya & Arjun", role: "Maldives Getaway", avatar: "🐠" },
-  { quote: "Best travel agency experience I've ever had. Period. Already planning my next trip with them.", name: "Sarah Verne", role: "Santorini Holiday", avatar: "🌊" },
+  { quote: "Lagya made our honeymoon absolutely magical. Every hotel, every sunset — perfectly planned.", name: "Maya & Raj", role: "Bali Honeymoon", avatar: "🌺" },
+  { quote: "I was nervous about my Canada PR process, but Lagya made it feel like booking a holiday.", name: "Dhruv Mehta", role: "Canada PR", avatar: "🍁" },
+  { quote: "Our family trip to Europe was the best vacation ever. The kids still talk about it.", name: "The Sharma Family", role: "Europe Tour", avatar: "🏔️" },
+  { quote: "From university shortlisting to accommodation — everything handled beautifully.", name: "Laura Kim", role: "UK Study Visa", avatar: "🎓" },
+  { quote: "The Maldives package was insane value. Private villa, sunset cruise — all included.", name: "Priya & Arjun", role: "Maldives Getaway", avatar: "🐠" },
+  { quote: "Best travel agency experience ever. Already planning my next trip with them.", name: "Sarah Verne", role: "Santorini Holiday", avatar: "🌊" },
 ];
 
 const blogs = [
@@ -197,18 +185,18 @@ const blogs = [
 ];
 
 const faqs = [
-  { q: "What destinations do you offer packages to?", a: "We cover 30+ countries across Europe, Asia, North America, Australia, and the Middle East — from popular tourist spots to hidden gems." },
-  { q: "Can you handle both visa and trip planning?", a: "Absolutely! That's our specialty. We handle everything from visa filing to hotel bookings, flights, sightseeing, and travel insurance." },
-  { q: "Do you offer group or family tour packages?", a: "Yes! We customize packages for solo travelers, couples, families, and groups. Each itinerary is tailored to your group's preferences and budget." },
-  { q: "What's included in your tour packages?", a: "Our packages typically include flights, accommodation, airport transfers, guided sightseeing, travel insurance, and 24/7 support during your trip." },
-  { q: "How far in advance should I book?", a: "We recommend booking 2-3 months ahead for international trips, though we can arrange last-minute getaways too." },
+  { q: "What destinations do you offer packages to?", a: "We cover 30+ countries across Europe, Asia, North America, Australia, and the Middle East." },
+  { q: "Can you handle both visa and trip planning?", a: "Absolutely! We handle everything from visa filing to hotel bookings, flights, and sightseeing." },
+  { q: "Do you offer group or family tour packages?", a: "Yes! We customize packages for solo travelers, couples, families, and groups." },
+  { q: "What's included in your tour packages?", a: "Flights, accommodation, airport transfers, guided sightseeing, travel insurance, and 24/7 support." },
+  { q: "How far in advance should I book?", a: "We recommend 2-3 months ahead for international trips, though last-minute getaways are possible." },
 ];
 
 const travelStats = [
   { number: 50, suffix: "+", label: "Destinations" },
   { number: 12, suffix: "K+", label: "Happy Travelers" },
-  { number: 98, suffix: "%", label: "Satisfaction Rate" },
-  { number: 24, suffix: "/7", label: "Travel Support" },
+  { number: 98, suffix: "%", label: "Satisfaction" },
+  { number: 24, suffix: "/7", label: "Support" },
 ];
 
 const marqueeItems = [
@@ -217,103 +205,62 @@ const marqueeItems = [
   "Singapore 🇸🇬", "Italy 🇮🇹", "New Zealand 🇳🇿", "Iceland 🇮🇸", "Thailand 🇹🇭",
 ];
 
+const partnerLogos = ["Emirates", "Airbnb", "Booking.com", "Qatar Airways", "Marriott", "Expedia", "Lufthansa", "Hilton"];
+
 /* ═══════════════════════════════════
    SHARED COMPONENTS
    ═══════════════════════════════════ */
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return <div className="section-label">{children}</div>;
 }
-
 function Reveal({ children, className, delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   return (
-    <motion.div
-      className={className}
-      variants={fade}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.12 }}
-      transition={{ duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] }}
-    >
-      {children}
-    </motion.div>
+    <motion.div className={className} variants={fade} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.12 }}
+      transition={{ duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] }}>{children}</motion.div>
   );
 }
-
 function StaggerReveal({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
-    <motion.div className={className} variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }}>
-      {children}
-    </motion.div>
+    <motion.div className={className} variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }}>{children}</motion.div>
   );
 }
 
-/* Animated counter — counts up when scrolled into view */
+/* Animated counter */
 function AnimatedCounter({ target, suffix }: { target: number; suffix: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.5 });
   const [count, setCount] = useState(0);
-
   useEffect(() => {
     if (!inView) return;
     let current = 0;
     const step = Math.max(1, Math.floor(target / 40));
     const timer = setInterval(() => {
       current += step;
-      if (current >= target) {
-        current = target;
-        clearInterval(timer);
-      }
+      if (current >= target) { current = target; clearInterval(timer); }
       setCount(current);
     }, 30);
     return () => clearInterval(timer);
   }, [inView, target]);
-
   return <span ref={ref}>{count}{suffix}</span>;
 }
 
-/* Magnetic button — follows cursor slightly */
-function MagneticButton({
-  children,
-  href,
-  className,
-}: {
-  children: React.ReactNode;
-  href: string;
-  className: string;
-}) {
+/* Magnetic button */
+function MagneticButton({ children, href, className }: { children: React.ReactNode; href: string; className: string }) {
   const ref = useRef<HTMLAnchorElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const springX = useSpring(x, { stiffness: 300, damping: 20 });
   const springY = useSpring(y, { stiffness: 300, damping: 20 });
-
   const handleMouse = useCallback((e: React.MouseEvent) => {
-    const el = ref.current;
-    if (!el) return;
+    const el = ref.current; if (!el) return;
     const rect = el.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-    x.set((e.clientX - cx) * 0.25);
-    y.set((e.clientY - cy) * 0.25);
+    x.set((e.clientX - rect.left - rect.width / 2) * 0.25);
+    y.set((e.clientY - rect.top - rect.height / 2) * 0.25);
   }, [x, y]);
-
-  const handleLeave = useCallback(() => {
-    x.set(0);
-    y.set(0);
-  }, [x, y]);
-
+  const handleLeave = useCallback(() => { x.set(0); y.set(0); }, [x, y]);
   return (
-    <motion.a
-      ref={ref}
-      href={href}
-      className={className}
-      style={{ x: springX, y: springY }}
-      onMouseMove={handleMouse}
-      onMouseLeave={handleLeave}
-      whileTap={{ scale: 0.95 }}
-    >
-      {children}
-    </motion.a>
+    <motion.a ref={ref} href={href} className={className} style={{ x: springX, y: springY }}
+      onMouseMove={handleMouse} onMouseLeave={handleLeave} whileTap={{ scale: 0.95 }}>{children}</motion.a>
   );
 }
 
@@ -321,36 +268,22 @@ function MagneticButton({
 function TextReveal({ text, className }: { text: string; className?: string }) {
   const words = text.split(" ");
   return (
-    <motion.span
-      className={className}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.3 }}
-      variants={{ show: { transition: { staggerChildren: 0.04 } } }}
-    >
+    <motion.span className={className} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.3 }}
+      variants={{ show: { transition: { staggerChildren: 0.04 } } }}>
       {words.map((word, i) => (
-        <motion.span
-          key={i}
-          style={{ display: "inline-block", marginRight: "0.3em" }}
-          variants={{
-            hidden: { opacity: 0, y: 20, filter: "blur(4px)" },
-            show: { opacity: 1, y: 0, filter: "blur(0px)" },
-          }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        >
-          {word}
-        </motion.span>
+        <motion.span key={i} style={{ display: "inline-block", marginRight: "0.3em" }}
+          variants={{ hidden: { opacity: 0, y: 20, filter: "blur(4px)" }, show: { opacity: 1, y: 0, filter: "blur(0px)" } }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}>{word}</motion.span>
       ))}
     </motion.span>
   );
 }
 
-/* Parallax image — moves slower than scroll */
+/* Parallax image */
 function ParallaxImage({ src, alt, className, speed = 0.3 }: { src: string; alt: string; className?: string; speed?: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], [speed * -100, speed * 100]);
-
   return (
     <div ref={ref} className={className} style={{ overflow: "hidden" }}>
       <motion.img src={src} alt={alt} style={{ y }} />
@@ -363,10 +296,13 @@ function ParallaxImage({ src, alt, className, speed = 0.3 }: { src: string; alt:
    ═══════════════════════════════════ */
 export default function Page() {
   const [bgIndex, setBgIndex] = useState(0);
-
-  /* Scroll progress bar */
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
+
+  /* Horizontal scroll */
+  const galleryRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: galleryProgress } = useScroll({ target: galleryRef, offset: ["start end", "end start"] });
+  const galleryX = useTransform(galleryProgress, [0, 1], ["0%", "-30%"]);
 
   const heroBackgrounds = [
     "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1800&q=80",
@@ -376,191 +312,100 @@ export default function Page() {
   ];
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setBgIndex((prev) => (prev + 1) % heroBackgrounds.length);
-    }, 7000);
-    return () => clearInterval(interval);
+    const id = setInterval(() => setBgIndex((p) => (p + 1) % heroBackgrounds.length), 7000);
+    return () => clearInterval(id);
   }, []);
 
   return (
     <main className="page-shell">
-      {/* Scroll progress bar */}
       <motion.div className="scroll-progress" style={{ scaleX }} />
-
       <div className="bg-flow bg-flow-one" />
       <div className="bg-flow bg-flow-two" />
-      <div className="bg-flow bg-flow-three" />
 
-      {/* ═══ HERO ═══ */}
+      {/* ═══════ HERO ═══════ */}
       <section className="hero">
         <AnimatePresence mode="popLayout">
-          <motion.div
-            key={bgIndex}
-            className="hero-dynamic-bg"
-            initial={{ opacity: 0, scale: 1.1 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
+          <motion.div key={bgIndex} className="hero-dynamic-bg"
+            initial={{ opacity: 0, scale: 1.1 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: 2, ease: "easeInOut" }}
-            style={{ backgroundImage: `url(${heroBackgrounds[bgIndex]})` }}
-          />
+            style={{ backgroundImage: `url(${heroBackgrounds[bgIndex]})` }} />
         </AnimatePresence>
         <div className="hero-overlay" />
 
         <header className="hero-nav">
           <motion.div className="brand" whileHover={{ scale: 1.05 }} transition={{ type: "spring", stiffness: 400 }}>
-            <div className="brand-badge"><Globe2 size={18} /></div>
-            <span>lagya</span>
+            <div className="brand-badge"><Globe2 size={18} /></div><span>lagya</span>
           </motion.div>
           <nav>
             <a href="#destinations">Destinations</a>
+            <a href="#packages">Packages</a>
             <a href="#services">Services</a>
-            <a href="#how-it-works">How It Works</a>
             <a href="#stories">Reviews</a>
             <a href="#blog">Journal</a>
           </nav>
-          <MagneticButton href="#contact" className="nav-cta">
-            Book a Trip <ArrowRight size={14} />
-          </MagneticButton>
+          <MagneticButton href="#contact" className="nav-cta">Book a Trip <ArrowRight size={14} /></MagneticButton>
         </header>
 
         <div className="hero-inner">
-          <motion.div
-            className="hero-copy"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          >
+          <motion.div className="hero-copy" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}>
             <h1>
-              <motion.span
-                className="hero-line"
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              >
-                Your Next
-              </motion.span>
-              <motion.span
-                className="hero-line hero-italic"
-                initial={{ opacity: 0, y: 40, rotateX: 30 }}
-                animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              >
-                Adventure
-              </motion.span>
-              <motion.span
-                className="hero-line"
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              >
-                Awaits
-              </motion.span>
+              <motion.span className="hero-line" initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}>Your Next</motion.span>
+              <motion.span className="hero-line hero-italic" initial={{ opacity: 0, y: 40, rotateX: 30 }} animate={{ opacity: 1, y: 0, rotateX: 0 }} transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}>Adventure</motion.span>
+              <motion.span className="hero-line" initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}>Awaits</motion.span>
             </h1>
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 1.1 }}
-            >
-              Discover breathtaking destinations, handcrafted travel packages, and seamless visa
-              services — all in one place.
+            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 1.1 }}>
+              Discover breathtaking destinations, handcrafted travel packages, and seamless visa services — all in one place.
             </motion.p>
           </motion.div>
 
-          <motion.div
-            className="hero-search"
-            initial={{ opacity: 0, y: 40, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.9, delay: 1.3, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div>
-              <span><MapPin size={12} style={{ marginRight: 4, verticalAlign: "middle" }} />Destination</span>
-              <strong>Where to?</strong>
-            </div>
-            <div>
-              <span><CalendarDays size={12} style={{ marginRight: 4, verticalAlign: "middle" }} />When</span>
-              <strong>Select dates</strong>
-            </div>
-            <div>
-              <span><Users size={12} style={{ marginRight: 4, verticalAlign: "middle" }} />Travelers</span>
-              <strong>2 adults</strong>
-            </div>
-            <motion.button type="button" whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.95 }}>
-              Search Trips
-            </motion.button>
+          <motion.div className="hero-search" initial={{ opacity: 0, y: 40, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.9, delay: 1.3, ease: [0.16, 1, 0.3, 1] }}>
+            <div><span><MapPin size={12} style={{ marginRight: 4, verticalAlign: "middle" }} />Destination</span><strong>Where to?</strong></div>
+            <div><span><CalendarDays size={12} style={{ marginRight: 4, verticalAlign: "middle" }} />When</span><strong>Select dates</strong></div>
+            <div><span><Users size={12} style={{ marginRight: 4, verticalAlign: "middle" }} />Travelers</span><strong>2 adults</strong></div>
+            <motion.button type="button" whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.95 }}>Search Trips</motion.button>
           </motion.div>
 
-          <motion.div
-            className="hero-bottom-row"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.6 }}
-          >
-            {travelStats.map((s) => (
-              <div className="hero-mini" key={s.label}>
-                <strong><AnimatedCounter target={s.number} suffix={s.suffix} /></strong>
-                <span>{s.label}</span>
-              </div>
-            ))}
+          <motion.div className="hero-bottom-row" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 1.6 }}>
+            {travelStats.map((s) => (<div className="hero-mini" key={s.label}><strong><AnimatedCounter target={s.number} suffix={s.suffix} /></strong><span>{s.label}</span></div>))}
           </motion.div>
         </div>
 
-        {/* Scroll indicator */}
-        <motion.div
-          className="scroll-hint"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 0.8 }}
-        >
-          <motion.div
-            className="scroll-hint-dot"
-            animate={{ y: [0, 8, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-          />
+        <motion.div className="scroll-hint" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2, duration: 0.8 }}>
+          <motion.div className="scroll-hint-dot" animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }} />
         </motion.div>
       </section>
 
-      {/* ═══ MARQUEE ═══ */}
+      {/* ═══════ MARQUEE ═══════ */}
       <div className="marquee-section">
         <div className="marquee-track">
-          {[...marqueeItems, ...marqueeItems].map((item, i) => (
-            <span key={i}>{item}</span>
-          ))}
+          {[...marqueeItems, ...marqueeItems].map((item, i) => (<span key={i}>{item}</span>))}
         </div>
       </div>
 
-      {/* ═══ DESTINATIONS ═══ */}
+      {/* ═══════ PARTNER LOGOS ═══════ */}
+      <section className="partner-strip">
+        <span className="partner-label">Trusted by leading travel brands</span>
+        <div className="partner-logos">
+          {partnerLogos.map((name) => (
+            <motion.div key={name} className="partner-logo" whileHover={{ scale: 1.1, opacity: 1 }}>{name}</motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* ═══════ DESTINATIONS ═══════ */}
       <section className="section" id="destinations">
         <Reveal>
           <SectionLabel><MapPin size={14} /> Popular Destinations</SectionLabel>
           <div className="section-head">
-            <div>
-              <h2><TextReveal text="Explore Our Most Loved Destinations" /></h2>
-            </div>
-            <MagneticButton className="pill-link" href="#contact">
-              View All Trips <ArrowRight size={14} />
-            </MagneticButton>
+            <div><h2><TextReveal text="Explore Our Most Loved Destinations" /></h2></div>
+            <MagneticButton className="pill-link" href="#packages">View All Trips <ArrowRight size={14} /></MagneticButton>
           </div>
         </Reveal>
-
         <StaggerReveal className="card-grid-three">
           {destinations.map((item, i) => (
-            <motion.div
-              className="image-card tall-card"
-              key={item.title}
-              variants={scaleIn}
-              transition={{ duration: 0.7, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{ y: -12, transition: { duration: 0.3 } }}
-            >
+            <motion.div className="image-card tall-card" key={item.title} variants={scaleIn} transition={{ duration: 0.7, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }} whileHover={{ y: -12, transition: { duration: 0.3 } }}>
               <img src={item.image} alt={item.title} />
-              <motion.button
-                type="button"
-                className="plus-button"
-                aria-label={item.title}
-                whileHover={{ scale: 1.2 }}
-                whileTap={{ scale: 0.9, backgroundColor: "#ff6b6b" }}
-              >
-                <Heart size={16} />
-              </motion.button>
+              <motion.button type="button" className="plus-button" aria-label={item.title} whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.9 }}><Heart size={16} /></motion.button>
               <div className="image-card-copy">
                 <div className="card-chip"><Star size={11} fill="currentColor" />{item.rating}</div>
                 <h3>{item.title}</h3>
@@ -570,19 +415,89 @@ export default function Page() {
             </motion.div>
           ))}
         </StaggerReveal>
+      </section>
 
-        <div className="slider-dots">
-          <span className="active" /><span /><span />
+      {/* ═══════ HORIZONTAL SCROLL GALLERY ═══════ */}
+      <section className="hscroll-section" ref={galleryRef}>
+        <Reveal className="hscroll-header">
+          <SectionLabel><Camera size={14} /> Gallery</SectionLabel>
+          <h2><TextReveal text="Destinations That Take Your Breath Away" /></h2>
+        </Reveal>
+        <div className="hscroll-outer">
+          <motion.div className="hscroll-track" style={{ x: galleryX }}>
+            {galleryImages.map((img, i) => (
+              <motion.div className="hscroll-card" key={i} whileHover={{ scale: 1.03, transition: { duration: 0.3 } }}>
+                <img src={img.src} alt={img.label} />
+                <div className="hscroll-label">
+                  <span className="hscroll-tag">{img.tag}</span>
+                  <strong>{img.label}</strong>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </section>
 
-      {/* ═══ SERVICES ═══ */}
+      {/* ═══════ WHY CHOOSE US ═══════ */}
+      <section className="section why-section">
+        <div className="why-grid">
+          <Reveal className="why-copy">
+            <SectionLabel><Award size={14} /> Why Choose Lagya</SectionLabel>
+            <h2><TextReveal text="Travel Made Effortless, Memories Made Forever" /></h2>
+            <p>We don&apos;t just book trips — we design experiences. From handpicked hotels to hidden-gem restaurants, every detail is crafted with love.</p>
+            <MagneticButton href="#contact" className="pill-link">Plan a Trip <ArrowRight size={14} /></MagneticButton>
+          </Reveal>
+          <StaggerReveal className="why-cards">
+            {whyUs.map((item, i) => {
+              const Icon = item.icon;
+              return (
+                <motion.div className="why-card" key={item.title} variants={fade} transition={{ duration: 0.6, delay: i * 0.1 }}
+                  whileHover={{ y: -6, boxShadow: "0 16px 48px rgba(255,107,53,0.1)", transition: { duration: 0.3 } }}>
+                  <div className="why-icon"><Icon size={22} /></div>
+                  <div><strong>{item.title}</strong><span>{item.desc}</span></div>
+                </motion.div>
+              );
+            })}
+          </StaggerReveal>
+        </div>
+      </section>
+
+      {/* ═══════ TRAVEL PACKAGES ═══════ */}
+      <section className="section" id="packages">
+        <Reveal>
+          <SectionLabel><Sparkles size={14} /> Travel Packages</SectionLabel>
+          <div className="section-head centered-head">
+            <h2><TextReveal text="Handcrafted Packages for Every Kind of Traveler" /></h2>
+          </div>
+        </Reveal>
+        <StaggerReveal className="packages-grid">
+          {packages.map((pkg, i) => (
+            <motion.div className={`package-card ${pkg.featured ? "featured" : ""}`} key={pkg.title} variants={scaleIn} transition={{ duration: 0.7, delay: i * 0.12 }}
+              whileHover={{ y: -10, transition: { duration: 0.3 } }}>
+              {pkg.featured && <div className="featured-badge">Most Popular</div>}
+              <div className="package-img"><img src={pkg.image} alt={pkg.title} /></div>
+              <div className="package-body">
+                <span className="package-loc"><MapPin size={13} /> {pkg.location}</span>
+                <h3>{pkg.title}</h3>
+                <span className="package-dur"><Clock size={13} /> {pkg.duration}</span>
+                <div className="package-amenities">
+                  {pkg.amenities.map((Ic, j) => (<div key={j} className="amenity-icon"><Ic size={16} /></div>))}
+                </div>
+                <div className="package-footer">
+                  <div className="package-price">{pkg.price}<span>{pkg.perPerson}</span></div>
+                  <motion.button className="package-btn" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>View Details</motion.button>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </StaggerReveal>
+      </section>
+
+      {/* ═══════ SERVICES ═══════ */}
       <section className="section services-section" id="services">
         <Reveal>
           <SectionLabel><Briefcase size={14} /> Our Services</SectionLabel>
-          <div className="section-head centered-head">
-            <h2><TextReveal text="Everything You Need for the Perfect Trip" /></h2>
-          </div>
+          <div className="section-head centered-head"><h2><TextReveal text="Everything You Need for the Perfect Trip" /></h2></div>
         </Reveal>
         <StaggerReveal className="services-grid">
           {services.map((svc, i) => {
@@ -591,16 +506,8 @@ export default function Page() {
             return (
               <motion.div className="flip-card-outer" key={svc.title} variants={scaleIn} transition={{ duration: 0.6, delay: i * 0.1 }}>
                 <div className="flip-card-inner">
-                  <div className="flip-front service-card">
-                    <div className="service-icon"><Icon size={28} /></div>
-                    <h3>{svc.title}</h3>
-                    <p>{svc.desc}</p>
-                  </div>
-                  <div className="flip-back">
-                    <BackSvg />
-                    <h3>{svc.backTitle}</h3>
-                    <p>{svc.backDesc}</p>
-                  </div>
+                  <div className="flip-front service-card"><div className="service-icon"><Icon size={28} /></div><h3>{svc.title}</h3><p>{svc.desc}</p></div>
+                  <div className="flip-back"><BackSvg /><h3>{svc.backTitle}</h3><p>{svc.backDesc}</p></div>
                 </div>
               </motion.div>
             );
@@ -608,86 +515,52 @@ export default function Page() {
         </StaggerReveal>
       </section>
 
-      {/* ═══ HOW IT WORKS ═══ */}
+      {/* ═══════ HOW IT WORKS ═══════ */}
       <section className="section how-section" id="how-it-works">
         <Reveal>
           <SectionLabel><Sparkles size={14} /> How It Works</SectionLabel>
-          <div className="section-head centered-head">
-            <h2><TextReveal text="Three Simple Steps to Your Dream Trip" /></h2>
-          </div>
+          <div className="section-head centered-head"><h2><TextReveal text="Three Simple Steps to Your Dream Trip" /></h2></div>
         </Reveal>
         <StaggerReveal className="steps-row">
           {howItWorks.map((step, i) => {
             const Icon = step.icon;
             return (
-              <motion.div
-                className="step-card"
-                key={step.step}
-                variants={fade}
-                transition={{ duration: 0.7, delay: i * 0.15 }}
-                whileHover={{ y: -8, boxShadow: "0 20px 50px rgba(255,107,53,0.12)", transition: { duration: 0.3 } }}
-              >
+              <motion.div className="step-card" key={step.step} variants={fade} transition={{ duration: 0.7, delay: i * 0.15 }}
+                whileHover={{ y: -8, boxShadow: "0 20px 50px rgba(255,107,53,0.12)", transition: { duration: 0.3 } }}>
                 <div className="step-number">{step.step}</div>
                 <div className="step-icon-wrap"><Icon size={32} /></div>
-                <h3>{step.title}</h3>
-                <p>{step.desc}</p>
+                <h3>{step.title}</h3><p>{step.desc}</p>
               </motion.div>
             );
           })}
         </StaggerReveal>
       </section>
 
-      {/* ═══ PARALLAX IMAGE BANNER ═══ */}
+      {/* ═══════ PARALLAX BANNER ═══════ */}
       <section className="section">
-        <motion.div
-          className="fullwidth-image-banner"
-          initial={{ opacity: 0, scale: 0.96 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <ParallaxImage
-            src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1600&q=80"
-            alt="Scenic lake with mountains"
-            className="banner-parallax-wrap"
-            speed={0.4}
-          />
+        <motion.div className="fullwidth-image-banner" initial={{ opacity: 0, scale: 0.96 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}>
+          <ParallaxImage src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1600&q=80" alt="Lake" className="banner-parallax-wrap" speed={0.4} />
           <div className="banner-overlay">
-            <motion.h2
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            >
-              Life Is Short.<br />The World Is Wide.
-            </motion.h2>
-            <MagneticButton href="#contact" className="pill-link">
-              Start Planning <ArrowRight size={14} />
-            </MagneticButton>
+            <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.2 }}>Life Is Short.<br />The World Is Wide.</motion.h2>
+            <MagneticButton href="#contact" className="pill-link">Start Planning <ArrowRight size={14} /></MagneticButton>
           </div>
         </motion.div>
       </section>
 
-      {/* ═══ STATS COUNTER BAR ═══ */}
+      {/* ═══════ STATS ═══════ */}
       <section className="section stats-bar">
         <div className="stats-bar-inner">
           {travelStats.map((s, i) => (
-            <motion.div
-              className="stat-item"
-              key={s.label}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <strong><AnimatedCounter target={s.number} suffix={s.suffix} /></strong>
-              <span>{s.label}</span>
+            <motion.div className="stat-item" key={s.label} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: i * 0.1 }}>
+              <strong><AnimatedCounter target={s.number} suffix={s.suffix} /></strong><span>{s.label}</span>
             </motion.div>
           ))}
         </div>
       </section>
 
-      {/* ═══ STORIES / TESTIMONIALS ═══ */}
+      {/* ═══════ TESTIMONIALS ═══════ */}
       <section className="section stories-block" id="stories">
         <Reveal className="stories-head">
           <SectionLabel><Heart size={14} fill="currentColor" /> Traveler Reviews</SectionLabel>
@@ -704,157 +577,76 @@ export default function Page() {
             </div>
           </div>
         </Reveal>
-
-        <div className="photo-strip">
-          {[
-            { src: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=500&q=80", alt: "Italy coast" },
-            { src: "https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=700&q=80", alt: "Adventure", center: true },
-            { src: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=500&q=80", alt: "Hot air balloons" },
-          ].map((img, i) => (
-            <ParallaxImage
-              key={i}
-              src={img.src}
-              alt={img.alt}
-              className={`photo-strip-item ${img.center ? "center-photo" : ""}`}
-              speed={img.center ? 0.2 : 0.35}
-            />
-          ))}
-        </div>
-
         <div className="testimonial-carousel">
           {stories.map((story, i) => (
-            <motion.div
-              className="quote-card"
-              key={story.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{ y: -6, boxShadow: "0 16px 48px rgba(0,0,0,0.08)", transition: { duration: 0.3 } }}
-            >
+            <motion.div className="quote-card" key={story.name} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: i * 0.06 }} whileHover={{ y: -6, boxShadow: "0 16px 48px rgba(0,0,0,0.08)", transition: { duration: 0.3 } }}>
               <div className="quote-avatar">{story.avatar}</div>
               <p>&ldquo;{story.quote}&rdquo;</p>
-              <div className="quote-meta">
-                <div>
-                  <strong>{story.name}</strong>
-                  <span>{story.role}</span>
-                </div>
-              </div>
+              <div className="quote-meta"><div><strong>{story.name}</strong><span>{story.role}</span></div></div>
             </motion.div>
           ))}
         </div>
       </section>
 
-      {/* ═══ FAQ ═══ */}
+      {/* ═══════ FAQ ═══════ */}
       <section className="section faq-panel" id="faq">
-        <ParallaxImage
-          src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=80"
-          alt="Mountains"
-          className="faq-image"
-          speed={0.25}
-        />
+        <ParallaxImage src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=80" alt="Mountains" className="faq-image" speed={0.25} />
         <Reveal className="faq-copy">
           <SectionLabel>FAQ</SectionLabel>
           <h2><TextReveal text="Got Questions? We've Got Answers" /></h2>
           <p className="faq-intro">Planning a trip can raise a lot of questions. Here are the ones travelers ask us most.</p>
           <div className="faq-list">
             {faqs.map((faq) => (
-              <details key={faq.q}>
-                <summary><span>{faq.q}</span><ChevronDown size={18} /></summary>
-                <div className="faq-answer">{faq.a}</div>
-              </details>
+              <details key={faq.q}><summary><span>{faq.q}</span><ChevronDown size={18} /></summary><div className="faq-answer">{faq.a}</div></details>
             ))}
           </div>
         </Reveal>
       </section>
 
-      {/* ═══ BLOG ═══ */}
+      {/* ═══════ BLOG ═══════ */}
       <section className="section" id="blog">
         <Reveal>
           <SectionLabel><Compass size={14} /> Travel Journal</SectionLabel>
-          <div className="section-head">
-            <div><h2><TextReveal text="Stories & Tips from the Road" /></h2></div>
-            <MagneticButton className="pill-link" href="#contact">
-              Read All <ArrowRight size={14} />
-            </MagneticButton>
+          <div className="section-head"><div><h2><TextReveal text="Stories & Tips from the Road" /></h2></div>
+            <MagneticButton className="pill-link" href="#">Read All <ArrowRight size={14} /></MagneticButton>
           </div>
         </Reveal>
         <StaggerReveal className="card-grid-three compact-grid">
           {blogs.map((blog, i) => (
-            <motion.div
-              className="image-card blog-card"
-              key={blog.title}
-              variants={scaleIn}
-              transition={{ duration: 0.7, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{ y: -10, transition: { duration: 0.3 } }}
-            >
+            <motion.div className="image-card blog-card" key={blog.title} variants={scaleIn} transition={{ duration: 0.7, delay: i * 0.12 }}
+              whileHover={{ y: -10, transition: { duration: 0.3 } }}>
               <img src={blog.image} alt={blog.title} />
-              <div className="image-card-copy">
-                <div className="card-chip">{blog.tag}</div>
-                <h3>{blog.title}</h3>
-              </div>
+              <div className="image-card-copy"><div className="card-chip">{blog.tag}</div><h3>{blog.title}</h3></div>
             </motion.div>
           ))}
         </StaggerReveal>
       </section>
 
-      {/* ═══ CTA ═══ */}
+      {/* ═══════ CTA ═══════ */}
       <section className="section cta-box" id="contact">
         <Reveal className="cta-copy">
           <SectionLabel><Plane size={14} /> Ready to Go?</SectionLabel>
           <h2><TextReveal text="Book Your Dream Trip Today" /></h2>
           <p>Tell us where you want to go. We&apos;ll handle the rest — flights, hotels, visas, and unforgettable experiences.</p>
-          <MagneticButton href="mailto:hello@lagyavisa.com" className="outline-button">
-            Plan My Trip <ArrowRight size={14} />
-          </MagneticButton>
+          <MagneticButton href="mailto:hello@lagyavisa.com" className="outline-button">Plan My Trip <ArrowRight size={14} /></MagneticButton>
         </Reveal>
         <div className="cta-images">
-          <motion.img
-            src="https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?auto=format&fit=crop&w=700&q=80"
-            alt="Santorini"
-            whileHover={{ scale: 1.05, rotate: 1 }}
-            transition={{ duration: 0.4 }}
-          />
-          <motion.img
-            src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=700&q=80"
-            alt="Bali"
-            whileHover={{ scale: 1.05, rotate: -1 }}
-            transition={{ duration: 0.4 }}
-          />
+          <motion.img src="https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?auto=format&fit=crop&w=700&q=80" alt="Santorini" whileHover={{ scale: 1.05, rotate: 1 }} transition={{ duration: 0.4 }} />
+          <motion.img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=700&q=80" alt="Bali" whileHover={{ scale: 1.05, rotate: -1 }} transition={{ duration: 0.4 }} />
         </div>
       </section>
 
-      {/* ═══ FOOTER ═══ */}
+      {/* ═══════ FOOTER ═══════ */}
       <footer className="footer">
         <div className="footer-brand">
-          <div className="brand">
-            <div className="brand-badge"><Globe2 size={20} /></div>
-            <span>lagya</span>
-          </div>
+          <div className="brand"><div className="brand-badge"><Globe2 size={20} /></div><span>lagya</span></div>
           <p>Your trusted travel partner for unforgettable vacations, seamless visas, and handcrafted journeys around the world.</p>
         </div>
         <div className="footer-columns">
-          <div>
-            <span>Quick Links</span>
-            <a href="#destinations">Destinations</a>
-            <a href="#services">Services</a>
-            <a href="#how-it-works">How It Works</a>
-            <a href="#blog">Journal</a>
-          </div>
-          <div>
-            <span>Top Destinations</span>
-            <a href="#">Bali, Indonesia</a>
-            <a href="#">Santorini, Greece</a>
-            <a href="#">Swiss Alps</a>
-            <a href="#">Maldives</a>
-          </div>
-          <div>
-            <span>Connect</span>
-            <a href="#">Instagram</a>
-            <a href="#">WhatsApp</a>
-            <a href="#">Facebook</a>
-            <a href="mailto:hello@lagyavisa.com">hello@lagyavisa.com</a>
-          </div>
+          <div><span>Quick Links</span><a href="#destinations">Destinations</a><a href="#packages">Packages</a><a href="#services">Services</a><a href="#blog">Journal</a></div>
+          <div><span>Top Destinations</span><a href="#">Bali, Indonesia</a><a href="#">Santorini, Greece</a><a href="#">Swiss Alps</a><a href="#">Maldives</a></div>
+          <div><span>Connect</span><a href="#">Instagram</a><a href="#">WhatsApp</a><a href="#">Facebook</a><a href="mailto:hello@lagyavisa.com">hello@lagyavisa.com</a></div>
         </div>
       </footer>
     </main>
