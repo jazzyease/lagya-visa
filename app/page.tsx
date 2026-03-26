@@ -168,51 +168,30 @@ function InsuranceSvg() {
 }
 const flipSvgMap: Record<string, React.FC> = { visa: VisaSvg, tour: TourSvg, corporate: CorporateSvg, insurance: InsuranceSvg };
 
-const StickyCard = ({ step, index, progress, total }: { step: any, index: number, progress: any, total: number }) => {
-  const targetScale = 1 - ((total - index) * 0.05);
-  // Scale down when scroll progress passes this card
-  const scale = useTransform(progress, [index / total, 1], [1, targetScale]);
-  
-  return (
-    <div className="journey-stack-card-wrap" style={{ top: `calc(12vh + ${index * 24}px)` }}>
-      <motion.div className="journey-stack-card" style={{ scale }}>
-        <div className="journey-stack-content">
-          <span className="journey-stack-num">{step.num}</span>
-          <h3>{step.title}</h3>
-          <p>{step.tagline}</p>
-        </div>
-        <div className="journey-stack-img">
-          <img src={step.image} alt={step.title} />
-        </div>
-      </motion.div>
-    </div>
-  );
-};
-
 const journeySteps = [
   {
     num: "01",
     title: "Dream It",
-    tagline: "Where do you want to wake up?",
-    image: "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?auto=format&fit=crop&w=800&q=80",
+    tagline: "Close your eyes. Where do you want to wake up tomorrow?",
+    image: "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?auto=format&fit=crop&w=1800&q=80",
   },
   {
     num: "02",
     title: "Plan It",
-    tagline: "We handle every single detail.",
-    image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80",
+    tagline: "Tell us your vision. We design every last detail.",
+    image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1800&q=80",
   },
   {
     num: "03",
     title: "Book It",
-    tagline: "One click. Flights, hotels, done.",
-    image: "https://images.unsplash.com/photo-1436491865332-7a61a109db05?auto=format&fit=crop&w=800&q=80",
+    tagline: "One click. Flights, hotels, experiences — all handled.",
+    image: "https://images.unsplash.com/photo-1436491865332-7a61a109db05?auto=format&fit=crop&w=1800&q=80",
   },
   {
     num: "04",
     title: "Live It",
-    tagline: "Make memories that last forever.",
-    image: "https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=800&q=80",
+    tagline: "Step off the plane. Your perfect trip has already begun.",
+    image: "https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=1800&q=80",
   },
 ];
 
@@ -357,9 +336,8 @@ export default function Page() {
   const { scrollYProgress: galleryProgress } = useScroll({ target: galleryRef, offset: ["start end", "end start"] });
   const galleryX = useTransform(galleryProgress, [0, 1], ["0%", "-30%"]);
 
-  /* Journey stack scroll */
-  const stackRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress: stackProgress } = useScroll({ target: stackRef, offset: ["start start", "end end"] });
+  /* Journey panels parallax */
+  const journeyPanelRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const heroBackgrounds = [
     "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1800&q=80",
@@ -495,18 +473,93 @@ export default function Page() {
         </div>
       </section>
 
-      {/* ═══════ YOUR JOURNEY ═══════ */}
-      <section className="section journey-section">
-        <Reveal className="journey-header">
-          <SectionLabel><Compass size={14} /> Your Journey</SectionLabel>
-          <h2><TextReveal text="Four Steps to Paradise" /></h2>
-        </Reveal>
-        <div className="journey-stack" ref={stackRef}>
+      {/* ═══════ YOUR JOURNEY — IMMERSIVE PANELS ═══════ */}
+      <div className="journey-panels">
+        {/* Side progress indicator */}
+        <div className="journey-progress-track">
           {journeySteps.map((step, i) => (
-            <StickyCard key={step.num} step={step} index={i} progress={stackProgress} total={journeySteps.length} />
+            <motion.div
+              key={step.num}
+              className="journey-progress-dot"
+              initial={{ opacity: 0.3 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ amount: 0.5 }}
+            />
           ))}
         </div>
-      </section>
+
+        {journeySteps.map((step, i) => {
+          const PanelInner = () => {
+            const panelRef = useRef<HTMLDivElement>(null);
+            const { scrollYProgress: panelProgress } = useScroll({
+              target: panelRef,
+              offset: ["start end", "end start"],
+            });
+            const imgY = useTransform(panelProgress, [0, 1], ["-10%", "10%"]);
+            const textY = useTransform(panelProgress, [0, 1], ["8%", "-8%"]);
+
+            return (
+              <section className="journey-panel" ref={panelRef} key={step.num}>
+                {/* Full-bleed background image with parallax */}
+                <motion.div
+                  className="journey-panel-bg"
+                  style={{
+                    backgroundImage: `url(${step.image})`,
+                    y: imgY,
+                  }}
+                />
+                <div className="journey-panel-overlay" />
+
+                {/* Giant watermark number */}
+                <motion.span
+                  className="journey-panel-watermark"
+                  initial={{ opacity: 0, x: -60 }}
+                  whileInView={{ opacity: 0.08, x: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  {step.num}
+                </motion.span>
+
+                {/* Content */}
+                <motion.div
+                  className="journey-panel-content"
+                  style={{ y: textY }}
+                >
+                  <motion.div
+                    className="journey-panel-label"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.5 }}
+                    transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    Step {step.num}
+                  </motion.div>
+                  <motion.h2
+                    className="journey-panel-title"
+                    initial={{ opacity: 0, y: 50, clipPath: "inset(100% 0 0 0)" }}
+                    whileInView={{ opacity: 1, y: 0, clipPath: "inset(0% 0 0 0)" }}
+                    viewport={{ once: true, amount: 0.5 }}
+                    transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    {step.title}
+                  </motion.h2>
+                  <motion.p
+                    className="journey-panel-tagline"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.5 }}
+                    transition={{ duration: 0.7, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    {step.tagline}
+                  </motion.p>
+                </motion.div>
+              </section>
+            );
+          };
+          return <PanelInner key={step.num} />;
+        })}
+      </div>
 
       {/* ═══════ TRAVEL PACKAGES ═══════ */}
       <section className="section" id="packages">

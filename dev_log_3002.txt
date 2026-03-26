@@ -1,0 +1,23 @@
+
+> lagya-visa@1.0.0 dev
+> next dev --port 3002
+
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3002
+
+ ✓ Starting...
+ ✓ Ready in 6.7s
+ ○ Compiling / ...
+ ✓ Compiled / in 2.2s (1361 modules)
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ GET / 200 in 2282ms
+ GET /_next/static/webpack/e989d2bcde683e8a.webpack.hot-update.json 404 in 2322ms
+ GET / 200 in 24ms
+ GET / 200 in 149ms
+ GET /videos/santorini.mp4 404 in 29ms
+ GET /videos/bali.mp4 404 in 29ms
+ GET /videos/swiss.mp4 404 in 23ms
+ ✓ Compiled in 594ms (1317 modules)
+ ✓ Compiled in 339ms (1331 modules)
+ ✓ Compiled in 288ms (1331 modules)
+ ✓ Compiled in 132ms (1331 modules)
