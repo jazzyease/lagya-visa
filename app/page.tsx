@@ -171,8 +171,8 @@ const flipSvgMap: Record<string, React.FC> = { visa: VisaSvg, tour: TourSvg, cor
 const journeySteps = [
   { num: "01", title: "Dream It", tagline: "Tell us where you want to wake up tomorrow.", image: "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?auto=format&fit=crop&w=1200&q=80" },
   { num: "02", title: "Plan It", tagline: "We craft every detail so you don't have to.", image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1200&q=80" },
-  { num: "03", title: "Book It", tagline: "One click. Flights, hotels, experiences — done.", image: "https://images.unsplash.com/photo-1436491865332-7a61a109db05?auto=format&fit=crop&w=1200&q=80" },
-  { num: "04", title: "Live It", tagline: "Make the memories that last a lifetime.", image: "https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=1200&q=80" },
+  { num: "03", title: "Book It", tagline: "One click. Flights, hotels, experiences — done.", image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1200&q=80" },
+  { num: "04", title: "Live It", tagline: "Make the memories that last a lifetime.", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80" },
 ];
 
 /* Scrollytelling panel — detects when in viewport and tells parent which step is active */
