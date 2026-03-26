@@ -168,6 +168,27 @@ function InsuranceSvg() {
 }
 const flipSvgMap: Record<string, React.FC> = { visa: VisaSvg, tour: TourSvg, corporate: CorporateSvg, insurance: InsuranceSvg };
 
+const StickyCard = ({ step, index, progress, total }: { step: any, index: number, progress: any, total: number }) => {
+  const targetScale = 1 - ((total - index) * 0.05);
+  // Scale down when scroll progress passes this card
+  const scale = useTransform(progress, [index / total, 1], [1, targetScale]);
+  
+  return (
+    <div className="journey-stack-card-wrap" style={{ top: `calc(12vh + ${index * 24}px)` }}>
+      <motion.div className="journey-stack-card" style={{ scale }}>
+        <div className="journey-stack-content">
+          <span className="journey-stack-num">{step.num}</span>
+          <h3>{step.title}</h3>
+          <p>{step.tagline}</p>
+        </div>
+        <div className="journey-stack-img">
+          <img src={step.image} alt={step.title} />
+        </div>
+      </motion.div>
+    </div>
+  );
+};
+
 const journeySteps = [
   {
     num: "01",
@@ -336,11 +357,9 @@ export default function Page() {
   const { scrollYProgress: galleryProgress } = useScroll({ target: galleryRef, offset: ["start end", "end start"] });
   const galleryX = useTransform(galleryProgress, [0, 1], ["0%", "-30%"]);
 
-  /* Journey timeline scroll-draw */
-  const timelineRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress: tlProgress } = useScroll({ target: timelineRef, offset: ["start 80%", "end 20%"] });
-  const lineScale = useSpring(useTransform(tlProgress, [0, 1], [0, 1]), { stiffness: 80, damping: 25 });
-  const dotTop = useTransform(tlProgress, [0, 1], ["0%", "100%"]);
+  /* Journey stack scroll */
+  const stackRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: stackProgress } = useScroll({ target: stackRef, offset: ["start start", "end end"] });
 
   const heroBackgrounds = [
     "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1800&q=80",
@@ -482,52 +501,9 @@ export default function Page() {
           <SectionLabel><Compass size={14} /> Your Journey</SectionLabel>
           <h2><TextReveal text="Four Steps to Paradise" /></h2>
         </Reveal>
-        <div className="journey-timeline" ref={timelineRef}>
-          <motion.div className="timeline-line" style={{ scaleY: lineScale }} />
-          <motion.div className="timeline-glow-dot" style={{ top: dotTop }} />
+        <div className="journey-stack" ref={stackRef}>
           {journeySteps.map((step, i) => (
-            <motion.div
-              className={`journey-step ${i % 2 === 1 ? "reverse" : ""}`}
-              key={step.num}
-              initial={{ opacity: 0, y: 60, x: i % 2 === 0 ? -40 : 40 }}
-              whileInView={{ opacity: 1, y: 0, x: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <div className="journey-img-wrap">
-                <motion.img
-                  src={step.image}
-                  alt={step.title}
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.5 }}
-                />
-              </div>
-              <div className="journey-node">
-                <motion.div
-                  className="journey-dot"
-                  initial={{ scale: 0 }}
-                  whileInView={{ scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.3, type: "spring", stiffness: 300 }}
-                >
-                  {step.num}
-                </motion.div>
-              </div>
-              <div className="journey-copy">
-                <motion.h3
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                >{step.title}</motion.h3>
-                <motion.p
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.5 }}
-                >{step.tagline}</motion.p>
-              </div>
-            </motion.div>
+            <StickyCard key={step.num} step={step} index={i} progress={stackProgress} total={journeySteps.length} />
           ))}
         </div>
       </section>
