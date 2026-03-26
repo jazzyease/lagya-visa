@@ -168,11 +168,31 @@ function InsuranceSvg() {
 }
 const flipSvgMap: Record<string, React.FC> = { visa: VisaSvg, tour: TourSvg, corporate: CorporateSvg, insurance: InsuranceSvg };
 
-const whyUs = [
-  { icon: Award, title: "Award Winning", desc: "Recognized for excellence in travel planning and customer service." },
-  { icon: Headphones, title: "24/7 Support", desc: "Round-the-clock assistance during your entire journey." },
-  { icon: ShieldCheck, title: "Best Price Guarantee", desc: "We match or beat any comparable travel package price." },
-  { icon: Umbrella, title: "Free Cancellation", desc: "Plans change — cancel up to 48 hours before for a full refund." },
+const journeySteps = [
+  {
+    num: "01",
+    title: "Dream It",
+    tagline: "Where do you want to wake up?",
+    image: "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    num: "02",
+    title: "Plan It",
+    tagline: "We handle every single detail.",
+    image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    num: "03",
+    title: "Book It",
+    tagline: "One click. Flights, hotels, done.",
+    image: "https://images.unsplash.com/photo-1436491865332-7a61a109db05?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    num: "04",
+    title: "Live It",
+    tagline: "Make memories that last forever.",
+    image: "https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=800&q=80",
+  },
 ];
 
 const howItWorks = [
@@ -450,27 +470,58 @@ export default function Page() {
         </div>
       </section>
 
-      {/* ═══════ WHY CHOOSE US ═══════ */}
-      <section className="section why-section">
-        <div className="why-grid">
-          <Reveal className="why-copy">
-            <SectionLabel><Award size={14} /> Why Choose Lagya</SectionLabel>
-            <h2><TextReveal text="Travel Made Effortless, Memories Made Forever" /></h2>
-            <p>We don&apos;t just book trips — we design experiences. From handpicked hotels to hidden-gem restaurants, every detail is crafted with love.</p>
-            <MagneticButton href="#contact" className="pill-link">Plan a Trip <ArrowRight size={14} /></MagneticButton>
-          </Reveal>
-          <StaggerReveal className="why-cards">
-            {whyUs.map((item, i) => {
-              const Icon = item.icon;
-              return (
-                <motion.div className="why-card" key={item.title} variants={fade} transition={{ duration: 0.6, delay: i * 0.1 }}
-                  whileHover={{ y: -6, boxShadow: "0 16px 48px rgba(255,107,53,0.1)", transition: { duration: 0.3 } }}>
-                  <div className="why-icon"><Icon size={22} /></div>
-                  <div><strong>{item.title}</strong><span>{item.desc}</span></div>
+      {/* ═══════ YOUR JOURNEY ═══════ */}
+      <section className="section journey-section">
+        <Reveal className="journey-header">
+          <SectionLabel><Compass size={14} /> Your Journey</SectionLabel>
+          <h2><TextReveal text="Four Steps to Paradise" /></h2>
+        </Reveal>
+        <div className="journey-timeline">
+          <div className="timeline-line" />
+          {journeySteps.map((step, i) => (
+            <motion.div
+              className={`journey-step ${i % 2 === 1 ? "reverse" : ""}`}
+              key={step.num}
+              initial={{ opacity: 0, y: 60, x: i % 2 === 0 ? -40 : 40 }}
+              whileInView={{ opacity: 1, y: 0, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <div className="journey-img-wrap">
+                <motion.img
+                  src={step.image}
+                  alt={step.title}
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.5 }}
+                />
+              </div>
+              <div className="journey-node">
+                <motion.div
+                  className="journey-dot"
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.3, type: "spring", stiffness: 300 }}
+                >
+                  {step.num}
                 </motion.div>
-              );
-            })}
-          </StaggerReveal>
+              </div>
+              <div className="journey-copy">
+                <motion.h3
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                >{step.title}</motion.h3>
+                <motion.p
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.5 }}
+                >{step.tagline}</motion.p>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </section>
 

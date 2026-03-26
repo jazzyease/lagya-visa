@@ -1274,73 +1274,157 @@ img { display: block; width: 100%; max-width: 100%; }
 }
 
 /* ═══════════════════════════════
-   WHY CHOOSE US
+   JOURNEY TIMELINE
    ═══════════════════════════════ */
-.why-section {
-  background: var(--surface-cool);
-  margin-left: 0;
-  margin-right: 0;
-  border-radius: var(--r-xl);
-  padding-bottom: 80px !important;
+.journey-section {
+  overflow: visible;
 }
-.why-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 64px;
-  align-items: center;
+.journey-header {
+  text-align: center;
+  margin-bottom: 72px;
 }
-.why-copy h2 {
+.journey-header h2 {
   font-family: var(--font-heading);
-  font-size: clamp(30px, 4vw, 48px);
-  line-height: 1.12;
-  letter-spacing: -0.02em;
+  font-size: clamp(34px, 5vw, 60px);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
   font-weight: 600;
   color: var(--text);
-  max-width: 500px;
 }
-.why-copy p {
-  margin: 20px 0 32px;
-  color: var(--text-secondary);
-  font-size: 16px;
-  line-height: 1.8;
-  max-width: 420px;
+.journey-timeline {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px 0 40px;
 }
-.why-cards {
+
+/* Animated vertical line */
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    var(--orange) 10%,
+    var(--teal) 50%,
+    var(--orange) 90%,
+    transparent 100%
+  );
+  opacity: 0.25;
+}
+.timeline-line::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--orange);
+  transform: translateX(-50%);
+  box-shadow: 0 0 20px var(--orange), 0 0 50px rgba(255, 107, 53, 0.3);
+  animation: journey-pulse 3s ease-in-out infinite;
+}
+@keyframes journey-pulse {
+  0%, 100% { top: 0%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* Each step row */
+.journey-step {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  grid-template-columns: 1fr 80px 1fr;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 80px;
+  position: relative;
 }
-.why-card {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  padding: 24px;
-  border-radius: var(--r-md);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  transition: all 0.3s var(--ease);
+.journey-step:last-child { margin-bottom: 0; }
+
+/* Reverse odd rows (image on right) */
+.journey-step.reverse .journey-img-wrap { order: 3; }
+.journey-step.reverse .journey-node { order: 2; }
+.journey-step.reverse .journey-copy { order: 1; text-align: right; }
+
+/* Image */
+.journey-img-wrap {
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  height: 300px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
 }
-.why-icon {
+.journey-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Center node (the dot) */
+.journey-node {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
-  flex-shrink: 0;
-  border-radius: var(--r-sm);
-  background: var(--orange-light);
-  color: var(--orange);
+  position: relative;
+  z-index: 2;
 }
-.why-card strong {
-  display: block;
-  font-size: 15px;
+.journey-dot {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--orange), #ff8f5e);
+  color: white;
+  font-size: 14px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 6px rgba(255, 107, 53, 0.15), 0 8px 32px rgba(255, 107, 53, 0.25);
+  letter-spacing: 0.04em;
+  position: relative;
+}
+.journey-dot::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 107, 53, 0.15);
+  animation: dot-ring-pulse 2s ease-in-out infinite;
+}
+@keyframes dot-ring-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.2); opacity: 0; }
+}
+
+/* Copy text */
+.journey-copy {
+  padding: 0 32px;
+}
+.journey-copy h3 {
+  font-family: var(--font-heading);
+  font-size: clamp(28px, 3.5vw, 42px);
   font-weight: 700;
-  margin-bottom: 4px;
+  line-height: 1.1;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, var(--text), var(--orange));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
-.why-card span {
-  font-size: 13px;
-  line-height: 1.6;
+.journey-copy p {
+  font-size: 17px;
   color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 300px;
+}
+.journey-step.reverse .journey-copy p {
+  margin-left: auto;
 }
 
 /* ═══════════════════════════════
@@ -1487,10 +1571,21 @@ img { display: block; width: 100%; max-width: 100%; }
   .stories-toolbar { flex-direction: column; }
   .stats-bar-inner { grid-template-columns: repeat(2, 1fr); }
   .packages-grid { grid-template-columns: 1fr; }
-  .why-grid { grid-template-columns: 1fr; gap: 40px; }
-  .why-cards { grid-template-columns: 1fr 1fr; }
   .hscroll-card { width: 300px; height: 360px; }
   .partner-logos { gap: 24px; }
+  .journey-step {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    text-align: center;
+  }
+  .journey-step.reverse .journey-img-wrap,
+  .journey-step.reverse .journey-node,
+  .journey-step.reverse .journey-copy { order: unset; text-align: center; }
+  .journey-step.reverse .journey-copy p { margin-left: auto; margin-right: auto; }
+  .journey-copy p { margin: 0 auto; }
+  .journey-img-wrap { height: 240px; }
+  .timeline-line { display: none; }
+  .journey-step { margin-bottom: 56px; }
 }
 
 @media (max-width: 640px) {
@@ -1516,12 +1611,12 @@ img { display: block; width: 100%; max-width: 100%; }
   .cta-images { grid-template-columns: 1fr; }
   .stats-bar-inner { grid-template-columns: 1fr 1fr; padding: 40px 24px; }
   .services-section { border-radius: var(--r-lg); }
-  .why-section { border-radius: var(--r-lg); }
-  .why-cards { grid-template-columns: 1fr; }
   .hscroll-card { width: 260px; height: 320px; }
   .hscroll-header { padding: 0 24px; }
   .hscroll-outer { padding-left: 24px; }
   .partner-strip { padding: 40px 24px; }
   .partner-logos { gap: 16px; }
   .partner-logo { font-size: 13px; }
+  .journey-img-wrap { height: 200px; }
+  .journey-dot { width: 44px; height: 44px; font-size: 12px; }
 }
