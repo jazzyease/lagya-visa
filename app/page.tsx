@@ -336,6 +336,12 @@ export default function Page() {
   const { scrollYProgress: galleryProgress } = useScroll({ target: galleryRef, offset: ["start end", "end start"] });
   const galleryX = useTransform(galleryProgress, [0, 1], ["0%", "-30%"]);
 
+  /* Journey timeline scroll-draw */
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: tlProgress } = useScroll({ target: timelineRef, offset: ["start 80%", "end 20%"] });
+  const lineScale = useSpring(useTransform(tlProgress, [0, 1], [0, 1]), { stiffness: 80, damping: 25 });
+  const dotTop = useTransform(tlProgress, [0, 1], ["0%", "100%"]);
+
   const heroBackgrounds = [
     "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1800&q=80",
     "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=80",
@@ -476,8 +482,9 @@ export default function Page() {
           <SectionLabel><Compass size={14} /> Your Journey</SectionLabel>
           <h2><TextReveal text="Four Steps to Paradise" /></h2>
         </Reveal>
-        <div className="journey-timeline">
-          <div className="timeline-line" />
+        <div className="journey-timeline" ref={timelineRef}>
+          <motion.div className="timeline-line" style={{ scaleY: lineScale }} />
+          <motion.div className="timeline-glow-dot" style={{ top: dotTop }} />
           {journeySteps.map((step, i) => (
             <motion.div
               className={`journey-step ${i % 2 === 1 ? "reverse" : ""}`}

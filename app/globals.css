@@ -1306,34 +1306,26 @@ img { display: block; width: 100%; max-width: 100%; }
   bottom: 0;
   width: 2px;
   transform: translateX(-50%);
+  transform-origin: top;
   background: linear-gradient(
     180deg,
-    transparent 0%,
-    var(--orange) 10%,
+    var(--orange) 0%,
     var(--teal) 50%,
-    var(--orange) 90%,
-    transparent 100%
+    var(--orange) 100%
   );
-  opacity: 0.25;
+  will-change: transform;
 }
-.timeline-line::after {
-  content: "";
+.timeline-glow-dot {
   position: absolute;
   left: 50%;
-  top: 0;
-  width: 6px;
-  height: 6px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: var(--orange);
   transform: translateX(-50%);
-  box-shadow: 0 0 20px var(--orange), 0 0 50px rgba(255, 107, 53, 0.3);
-  animation: journey-pulse 3s ease-in-out infinite;
-}
-@keyframes journey-pulse {
-  0%, 100% { top: 0%; opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { top: 100%; opacity: 0; }
+  box-shadow: 0 0 24px var(--orange), 0 0 60px rgba(255, 107, 53, 0.4);
+  will-change: top;
+  z-index: 3;
 }
 
 /* Each step row */
