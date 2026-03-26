@@ -50,9 +50,21 @@ const scaleIn = { hidden: { opacity: 0, scale: 0.88, y: 30 }, show: { opacity: 1
    DATA
    ═══════════════════════════════════ */
 const destinations = [
-  { title: "Santorini, Greece", duration: "7 Days", price: "From $1,299", rating: "4.9", image: "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?auto=format&fit=crop&w=900&q=80" },
-  { title: "Bali, Indonesia", duration: "10 Days", price: "From $899", rating: "5.0", image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=900&q=80" },
-  { title: "Swiss Alps", duration: "5 Days", price: "From $1,599", rating: "4.8", image: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?auto=format&fit=crop&w=900&q=80" },
+  {
+    title: "Santorini, Greece", duration: "7 Days", price: "From $1,299", rating: "4.9",
+    poster: "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?auto=format&fit=crop&w=900&q=80",
+    video: "/videos/santorini.mp4",  // ← Replace with your video
+  },
+  {
+    title: "Bali, Indonesia", duration: "10 Days", price: "From $899", rating: "5.0",
+    poster: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=900&q=80",
+    video: "/videos/bali.mp4",  // ← Replace with your video
+  },
+  {
+    title: "Swiss Alps", duration: "5 Days", price: "From $1,599", rating: "4.8",
+    poster: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?auto=format&fit=crop&w=900&q=80",
+    video: "/videos/swiss.mp4",  // ← Replace with your video
+  },
 ];
 
 /* Horizontal scroll gallery data */
@@ -403,8 +415,8 @@ export default function Page() {
         </Reveal>
         <StaggerReveal className="card-grid-three">
           {destinations.map((item, i) => (
-            <motion.div className="image-card tall-card" key={item.title} variants={scaleIn} transition={{ duration: 0.7, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }} whileHover={{ y: -12, transition: { duration: 0.3 } }}>
-              <img src={item.image} alt={item.title} />
+            <motion.div className="image-card tall-card video-card" key={item.title} variants={scaleIn} transition={{ duration: 0.7, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }} whileHover={{ y: -12, transition: { duration: 0.3 } }}>
+              <video src={item.video} poster={item.poster} autoPlay muted loop playsInline />
               <motion.button type="button" className="plus-button" aria-label={item.title} whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.9 }}><Heart size={16} /></motion.button>
               <div className="image-card-copy">
                 <div className="card-chip"><Star size={11} fill="currentColor" />{item.rating}</div>

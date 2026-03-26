@@ -462,12 +462,20 @@ img { display: block; width: 100%; max-width: 100%; }
   transition: box-shadow 0.5s var(--ease);
 }
 .image-card:hover { box-shadow: var(--shadow-lg); }
-.image-card img {
+.image-card img,
+.image-card video {
   height: 100%;
   object-fit: cover;
   transition: transform 0.8s var(--ease);
 }
-.image-card:hover img { transform: scale(1.1); }
+.image-card:hover img,
+.image-card:hover video { transform: scale(1.1); }
+.video-card video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
 .tall-card { min-height: 480px; }
 .blog-card { min-height: 380px; }
 .image-card::after {
