@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 
+import SmoothScroll from "./components/SmoothScroll";
 import "./globals.css";
 
 const geist = localFont({
@@ -38,7 +39,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geist.variable} ${inter.variable} ${instrumentSerif.variable}`}>
-      <body>{children}</body>
+      <body>
+        <SmoothScroll>{children}</SmoothScroll>
+      </body>
     </html>
   );
 }

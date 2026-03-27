@@ -1,8 +1,11 @@
+# Deploys static export to GitHub Pages on every push to `main`.
+# Repo settings → Pages → Build and deployment → Source: GitHub Actions.
 name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -10,7 +13,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: false
 
 jobs:
@@ -24,12 +27,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: "npm"
+          cache: npm
 
       - name: Install dependencies
         run: npm ci
 
+      # Project Pages live at https://<user>.github.io/<repo>/
+      # next.config.mjs reads BASE_PATH so /_next assets resolve correctly.
       - name: Build
+        env:
+          BASE_PATH: /${{ github.event.repository.name }}
         run: npm run build
 
       - name: Upload artifact

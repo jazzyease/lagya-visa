@@ -13,8 +13,6 @@ import {
 import {
   ArrowRight,
   ChevronDown,
-  ChevronLeft,
-  ChevronRight,
   Globe2,
   MapPin,
   Compass,
@@ -38,13 +36,16 @@ import {
   Headphones,
   Umbrella,
 } from "lucide-react";
+import PlanYourTravelSection from "./components/PlanYourTravelSection";
+import TestimonialsSection from "./components/TestimonialsSection";
+import SiteFooter from "./components/SiteFooter";
 
 /* ═══════════════════════════════════
    ANIMATION VARIANTS
    ═══════════════════════════════════ */
-const fade = { hidden: { opacity: 0, y: 40 }, show: { opacity: 1, y: 0 } };
-const stagger = { show: { transition: { staggerChildren: 0.13 } } };
-const scaleIn = { hidden: { opacity: 0, scale: 0.88, y: 30 }, show: { opacity: 1, scale: 1, y: 0 } };
+const fade = { hidden: { opacity: 0, y: 36 }, show: { opacity: 1, y: 0 } };
+const stagger = { show: { transition: { staggerChildren: 0.11 } } };
+const scaleIn = { hidden: { opacity: 0, scale: 0.92, y: 28 }, show: { opacity: 1, scale: 1, y: 0 } };
 
 /* ═══════════════════════════════════
    DATA
@@ -132,25 +133,173 @@ function VisaSvg() {
   );
 }
 function TourSvg() {
+  const route =
+    "M24 82 C36 48, 48 36, 60 46 C72 56, 84 32, 96 42";
   return (
-    <svg viewBox="0 0 120 120" fill="none" className="flip-svg">
-      <circle cx="60" cy="60" r="40" fill="#e6faf5" stroke="#0ead8e" strokeWidth="1.5" />
-      <ellipse cx="60" cy="60" rx="20" ry="40" fill="none" stroke="#0ead8e" strokeWidth="1" opacity="0.4" />
-      <line x1="20" y1="60" x2="100" y2="60" stroke="#0ead8e" strokeWidth="1" opacity="0.3" />
-      <g className="pin-bounce"><path d="M60 30 C60 30 48 40 48 50 C48 57 53 62 60 62 C67 62 72 57 72 50 C72 40 60 30 60 30Z" fill="#ff6b35" /><circle cx="60" cy="49" r="5" fill="white" /></g>
-      <circle cx="60" cy="50" r="8" fill="none" stroke="#ff6b35" strokeWidth="1" className="pulse-ring ring-1" />
-      <circle cx="60" cy="50" r="15" fill="none" stroke="#ff6b35" strokeWidth="0.8" className="pulse-ring ring-2" />
+    <svg viewBox="0 0 120 120" fill="none" className="flip-svg tour-flip-svg" aria-hidden>
+      <defs>
+        <linearGradient id="tourFlipGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#f4fdfb" />
+          <stop offset="100%" stopColor="#dff6f0" />
+        </linearGradient>
+        <filter id="tourFlipGlow" x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur stdDeviation="1.2" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
+      <circle cx="60" cy="60" r="54" fill="url(#tourFlipGrad)" />
+      <circle
+        cx="60"
+        cy="60"
+        r="47"
+        fill="none"
+        stroke="#0ead8e"
+        strokeOpacity="0.14"
+        strokeWidth="1"
+        className="tour-globe-ring"
+      />
+      <ellipse
+        cx="60"
+        cy="60"
+        rx="46"
+        ry="24"
+        fill="none"
+        stroke="#0ead8e"
+        strokeOpacity="0.1"
+        strokeWidth="1"
+        className="tour-globe-lat"
+      />
+      <path
+        d={route}
+        stroke="#0ead8e"
+        strokeOpacity="0.22"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
+      <path
+        d={route}
+        stroke="#ff6b35"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+        pathLength={100}
+        className="tour-itinerary-draw"
+      />
+      <circle cx="24" cy="82" r="4" fill="#0ead8e" opacity="0.85" />
+      <circle cx="96" cy="42" r="4" fill="#ff6b35" opacity="0.9" />
+      <path id="tourFlipMotionPath" d={route} fill="none" stroke="none" />
+      <g filter="url(#tourFlipGlow)">
+        <g>
+          <polygon points="-7,-3.5 9,0 -7,3.5 -1.5,0" fill="#ff6b35" />
+          <animateMotion
+            dur="4.2s"
+            repeatCount="indefinite"
+            rotate="auto"
+            calcMode="spline"
+            keyTimes="0;1"
+            keySplines="0.42 0 0.2 1"
+          >
+            <mpath href="#tourFlipMotionPath" />
+          </animateMotion>
+        </g>
+      </g>
     </svg>
   );
 }
 function CorporateSvg() {
+  const bars = [10, 15, 8, 18, 12, 16, 9, 20, 8, 14, 11, 17, 10, 14, 9];
   return (
-    <svg viewBox="0 0 120 120" fill="none" className="flip-svg">
-      <rect x="20" y="35" width="80" height="50" rx="8" fill="white" stroke="#ff6b35" strokeWidth="1.5" />
-      <line x1="70" y1="40" x2="70" y2="80" stroke="#ff6b35" strokeWidth="1" strokeDasharray="3 3" opacity="0.4" />
-      <rect x="28" y="45" width="32" height="4" rx="2" fill="#ffccb3" />
-      <rect x="28" y="54" width="24" height="3" rx="1.5" fill="#ffe0cc" />
-      <g className="stamp-appear"><circle cx="50" cy="65" r="10" fill="none" stroke="#0ead8e" strokeWidth="2" /><text x="50" y="68" textAnchor="middle" fontSize="7" fontWeight="700" fill="#0ead8e">OK</text></g>
+    <svg viewBox="0 0 120 120" fill="none" className="flip-svg corp-flip-svg" aria-hidden>
+      <defs>
+        <linearGradient id="corpFlipCard" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#ffffff" />
+          <stop offset="100%" stopColor="#fff9f5" />
+        </linearGradient>
+        <linearGradient id="corpFlipScan" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="rgba(255,107,53,0)" />
+          <stop offset="45%" stopColor="rgba(255,107,53,0.45)" />
+          <stop offset="100%" stopColor="rgba(255,107,53,0)" />
+        </linearGradient>
+      </defs>
+      <rect
+        x="12"
+        y="26"
+        width="96"
+        height="68"
+        rx="16"
+        fill="url(#corpFlipCard)"
+        stroke="rgba(255,107,53,0.28)"
+        strokeWidth="1.5"
+      />
+      <rect x="12" y="26" width="7" height="68" rx="3" fill="#ff6b35" opacity="0.92" />
+      <line
+        x1="26"
+        y1="40"
+        x2="50"
+        y2="40"
+        stroke="#ffccb3"
+        strokeWidth="3.5"
+        strokeLinecap="round"
+        className="corp-doc-line corp-doc-line--a"
+      />
+      <line
+        x1="26"
+        y1="52"
+        x2="42"
+        y2="52"
+        stroke="#ffe4d4"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        className="corp-doc-line corp-doc-line--b"
+      />
+      <g className="corp-ticket-plane">
+        <circle cx="88" cy="42" r="15" fill="rgba(255, 107, 53, 0.12)" />
+        <path
+          d="M78 42 L86 34 L90 34 L88 42 L94 48 L90 48 L86 44 L82 48 L78 48 L82 42 Z"
+          fill="#ff6b35"
+          opacity="0.95"
+        />
+      </g>
+      <g>
+        {bars.map((h, i) => (
+          <rect
+            key={i}
+            x={58 + i * 3.2}
+            y={76 - h}
+            width="2.2"
+            height={h}
+            rx="0.8"
+            fill="#1a1a1a"
+            opacity="0.35"
+            className="corp-bar"
+            style={{ animationDelay: `${i * 0.07}s` }}
+          />
+        ))}
+      </g>
+      <rect
+        x="22"
+        y="26"
+        width="76"
+        height="10"
+        fill="url(#corpFlipScan)"
+        className="corp-scan-sweep"
+      />
+      <circle cx="34" cy="78" r="5" fill="none" stroke="#0ead8e" strokeWidth="1.6" className="corp-seal-ring" />
+      <path
+        d="M31 78 L33.5 80.5 L38 75.5"
+        stroke="#0ead8e"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+        className="corp-seal-check"
+      />
     </svg>
   );
 }
@@ -168,33 +317,6 @@ function InsuranceSvg() {
 }
 const flipSvgMap: Record<string, React.FC> = { visa: VisaSvg, tour: TourSvg, corporate: CorporateSvg, insurance: InsuranceSvg };
 
-const journeySteps = [
-  { num: "01", title: "Dream It", tagline: "Tell us where you want to wake up tomorrow.", image: "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?auto=format&fit=crop&w=1200&q=80" },
-  { num: "02", title: "Plan It", tagline: "We craft every detail so you don't have to.", image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1200&q=80" },
-  { num: "03", title: "Book It", tagline: "One click. Flights, hotels, experiences — done.", image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1200&q=80" },
-  { num: "04", title: "Live It", tagline: "Make the memories that last a lifetime.", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80" },
-];
-
-/* Scrollytelling panel — detects when in viewport and tells parent which step is active */
-function JourneyPanel({ step, index, onActivate }: { step: typeof journeySteps[0]; index: number; onActivate: (i: number) => void }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { margin: "-40% 0px -40% 0px" });
-  useEffect(() => { if (isInView) onActivate(index); }, [isInView, index, onActivate]);
-  return (
-    <motion.div
-      ref={ref}
-      className="journey-panel"
-      initial={{ opacity: 0.15 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ margin: "-40% 0px -40% 0px" }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-    >
-      <span className="journey-panel-num">{step.num}</span>
-      <h3>{step.title}</h3>
-      <p>{step.tagline}</p>
-    </motion.div>
-  );
-}
 
 const howItWorks = [
   { step: "01", title: "Tell Us Your Dream", desc: "Share your travel vision — destination, dates, budget.", icon: PhoneCall },
@@ -248,13 +370,29 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 }
 function Reveal({ children, className, delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   return (
-    <motion.div className={className} variants={fade} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.12 }}
-      transition={{ duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] }}>{children}</motion.div>
+    <motion.div
+      className={className}
+      variants={fade}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.18, margin: "0px 0px -12% 0px" }}
+      transition={{ duration: 0.85, delay, ease: [0.16, 1, 0.3, 1] }}
+    >
+      {children}
+    </motion.div>
   );
 }
 function StaggerReveal({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
-    <motion.div className={className} variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }}>{children}</motion.div>
+    <motion.div
+      className={className}
+      variants={stagger}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.12, margin: "0px 0px -10% 0px" }}
+    >
+      {children}
+    </motion.div>
   );
 }
 
@@ -324,6 +462,24 @@ function ParallaxImage({ src, alt, className, speed = 0.3 }: { src: string; alt:
   );
 }
 
+function DestinationMedia({ poster, video, title }: { poster: string; video: string; title: string }) {
+  const [usePoster, setUsePoster] = useState(false);
+  if (usePoster) {
+    return <img src={poster} alt={title} />;
+  }
+  return (
+    <video
+      src={video}
+      poster={poster}
+      autoPlay
+      muted
+      loop
+      playsInline
+      onError={() => setUsePoster(true)}
+    />
+  );
+}
+
 /* ═══════════════════════════════════
    PAGE
    ═══════════════════════════════════ */
@@ -337,9 +493,7 @@ export default function Page() {
   const { scrollYProgress: galleryProgress } = useScroll({ target: galleryRef, offset: ["start end", "end start"] });
   const galleryX = useTransform(galleryProgress, [0, 1], ["0%", "-30%"]);
 
-  /* Journey scrollytelling */
-  const [activeStep, setActiveStep] = useState(0);
-  const handleStepActivate = useCallback((i: number) => setActiveStep(i), []);
+
 
   const heroBackgrounds = [
     "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1800&q=80",
@@ -441,7 +595,7 @@ export default function Page() {
         <StaggerReveal className="card-grid-three">
           {destinations.map((item, i) => (
             <motion.div className="image-card tall-card video-card" key={item.title} variants={scaleIn} transition={{ duration: 0.7, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }} whileHover={{ y: -12, transition: { duration: 0.3 } }}>
-              <video src={item.video} poster={item.poster} autoPlay muted loop playsInline />
+              <DestinationMedia poster={item.poster} video={item.video} title={item.title} />
               <motion.button type="button" className="plus-button" aria-label={item.title} whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.9 }}><Heart size={16} /></motion.button>
               <div className="image-card-copy">
                 <div className="card-chip"><Star size={11} fill="currentColor" />{item.rating}</div>
@@ -476,40 +630,7 @@ export default function Page() {
       </section>
 
       {/* ═══════ YOUR JOURNEY ═══════ */}
-      <section className="journey-section">
-        <Reveal className="journey-header">
-          <SectionLabel><Compass size={14} /> Your Journey</SectionLabel>
-          <h2><TextReveal text="Four Steps to Paradise" /></h2>
-        </Reveal>
-        <div className="journey-scrolly">
-          {/* Sticky image panel */}
-          <div className="journey-sticky-img">
-            <AnimatePresence mode="popLayout">
-              <motion.img
-                key={activeStep}
-                src={journeySteps[activeStep].image}
-                alt={journeySteps[activeStep].title}
-                initial={{ opacity: 0, scale: 1.08 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              />
-            </AnimatePresence>
-            {/* Step indicator dots */}
-            <div className="journey-dots">
-              {journeySteps.map((_, i) => (
-                <div key={i} className={`journey-ind ${i === activeStep ? "active" : ""}`} />
-              ))}
-            </div>
-          </div>
-          {/* Scrolling text panels */}
-          <div className="journey-panels">
-            {journeySteps.map((step, i) => (
-              <JourneyPanel key={step.num} step={step} index={i} onActivate={handleStepActivate} />
-            ))}
-          </div>
-        </div>
-      </section>
+      <PlanYourTravelSection />
 
       {/* ═══════ TRAVEL PACKAGES ═══════ */}
       <section className="section" id="packages">
@@ -610,33 +731,7 @@ export default function Page() {
       </section>
 
       {/* ═══════ TESTIMONIALS ═══════ */}
-      <section className="section stories-block" id="stories">
-        <Reveal className="stories-head">
-          <SectionLabel><Heart size={14} fill="currentColor" /> Traveler Reviews</SectionLabel>
-          <h2><TextReveal text="Loved by Thousands of Happy Travelers" /></h2>
-          <div className="stories-toolbar">
-            <div className="rating-line">
-              <span>4.8/5</span>
-              <div>{Array.from({ length: 5 }).map((_, i) => (<Star key={i} size={16} fill="currentColor" />))}</div>
-              <span>12,000+ reviews</span>
-            </div>
-            <div className="carousel-controls">
-              <motion.button type="button" aria-label="Previous" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}><ChevronLeft size={20} /></motion.button>
-              <motion.button type="button" aria-label="Next" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}><ChevronRight size={20} /></motion.button>
-            </div>
-          </div>
-        </Reveal>
-        <div className="testimonial-carousel">
-          {stories.map((story, i) => (
-            <motion.div className="quote-card" key={story.name} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.06 }} whileHover={{ y: -6, boxShadow: "0 16px 48px rgba(0,0,0,0.08)", transition: { duration: 0.3 } }}>
-              <div className="quote-avatar">{story.avatar}</div>
-              <p>&ldquo;{story.quote}&rdquo;</p>
-              <div className="quote-meta"><div><strong>{story.name}</strong><span>{story.role}</span></div></div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+      <TestimonialsSection stories={stories} />
 
       {/* ═══════ FAQ ═══════ */}
       <section className="section faq-panel" id="faq">
@@ -672,32 +767,7 @@ export default function Page() {
         </StaggerReveal>
       </section>
 
-      {/* ═══════ CTA ═══════ */}
-      <section className="section cta-box" id="contact">
-        <Reveal className="cta-copy">
-          <SectionLabel><Plane size={14} /> Ready to Go?</SectionLabel>
-          <h2><TextReveal text="Book Your Dream Trip Today" /></h2>
-          <p>Tell us where you want to go. We&apos;ll handle the rest — flights, hotels, visas, and unforgettable experiences.</p>
-          <MagneticButton href="mailto:hello@lagyavisa.com" className="outline-button">Plan My Trip <ArrowRight size={14} /></MagneticButton>
-        </Reveal>
-        <div className="cta-images">
-          <motion.img src="https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?auto=format&fit=crop&w=700&q=80" alt="Santorini" whileHover={{ scale: 1.05, rotate: 1 }} transition={{ duration: 0.4 }} />
-          <motion.img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=700&q=80" alt="Bali" whileHover={{ scale: 1.05, rotate: -1 }} transition={{ duration: 0.4 }} />
-        </div>
-      </section>
-
-      {/* ═══════ FOOTER ═══════ */}
-      <footer className="footer">
-        <div className="footer-brand">
-          <div className="brand"><div className="brand-badge"><Globe2 size={20} /></div><span>lagya</span></div>
-          <p>Your trusted travel partner for unforgettable vacations, seamless visas, and handcrafted journeys around the world.</p>
-        </div>
-        <div className="footer-columns">
-          <div><span>Quick Links</span><a href="#destinations">Destinations</a><a href="#packages">Packages</a><a href="#services">Services</a><a href="#blog">Journal</a></div>
-          <div><span>Top Destinations</span><a href="#">Bali, Indonesia</a><a href="#">Santorini, Greece</a><a href="#">Swiss Alps</a><a href="#">Maldives</a></div>
-          <div><span>Connect</span><a href="#">Instagram</a><a href="#">WhatsApp</a><a href="#">Facebook</a><a href="mailto:hello@lagyavisa.com">hello@lagyavisa.com</a></div>
-        </div>
-      </footer>
+      <SiteFooter />
     </main>
   );
 }
